@@ -9,6 +9,7 @@ import com.keixxdd.weewee.databinding.ActivityMainBinding
 import com.keixxdd.weewee.presentation.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button.setOnClickListener{
+        /*binding.button.setOnClickListener{
             viewModel.registerUser(
                 "aaaa@mail.ru",
                 "AAAA",
@@ -30,8 +31,8 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.response.collect{ data ->
+        lifecycleScope.launchWhenStarted {
+            viewModel.response.collectLatest{ data ->
                 when (data) {
                     is MainViewModel.GetResponseEvent.Success<*> -> {
                         binding.textView.text = "Success!!"
@@ -44,6 +45,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        }*/
     }
 }

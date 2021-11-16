@@ -1,6 +1,7 @@
 package com.keixxdd.weewee.di
 
 import com.keixxdd.weewee.data.repository.DefaultRepository
+import com.keixxdd.weewee.domain.usecases.CheckLoginUseCase
 import com.keixxdd.weewee.domain.usecases.RegisterUserUseCase
 import dagger.Module
 import dagger.Provides
@@ -16,4 +17,7 @@ object UseCasesModule {
     @Provides
     fun provideRegisterUserUseCase(repository: DefaultRepository): RegisterUserUseCase = RegisterUserUseCase(repository)
 
+    @ViewModelScoped
+    @Provides
+    fun provideCheckLoginUseCase(repository: DefaultRepository): CheckLoginUseCase = CheckLoginUseCase(repository)
 }

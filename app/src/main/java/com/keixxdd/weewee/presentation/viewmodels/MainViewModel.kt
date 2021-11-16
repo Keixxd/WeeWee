@@ -1,21 +1,21 @@
 package com.keixxdd.weewee.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.keixxdd.weewee.domain.usecases.CheckLoginUseCase
 import com.keixxdd.weewee.domain.usecases.RegisterUserUseCase
 import com.keixxdd.weewee.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val registerUseCase: RegisterUserUseCase
+    private val registerUseCase: RegisterUserUseCase,
+    private val checkLoginUseCase: CheckLoginUseCase
 ): ViewModel() {
 
     sealed class GetResponseEvent{
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
     }
 
     private val _response = MutableStateFlow<GetResponseEvent>(GetResponseEvent.NotLoading)
-    val response: StateFlow<GetResponseEvent> = _response
+    val response = _response.asStateFlow()
 
     fun registerUser(
         email: String,
@@ -50,6 +50,29 @@ class MainViewModel @Inject constructor(
                 }
                 is Resource.Failure -> {
                     _response.value = GetResponseEvent.Error(registerCallback.message?.message)
+                }
+            }
+        }
+    }
+
+    fun checkLogin(
+        email: String,
+        password: String
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            _response.value = GetResponseEvent.Loading
+            when(val loginCallback = checkLoginUseCase.invoke(
+                email = email,
+                password = password
+            )){
+                is Resource.Success -> {
+                    if(loginCallback.data == null)
+                        _response.value = GetResponseEvent.Error("Unexpected Error")
+                    else
+                        _response.value = GetResponseEvent.Success(loginCallback.data)
+                }
+                is Resource.Failure -> {
+                    _response.value = GetResponseEvent.Error(loginCallback.message?.message)
                 }
             }
         }
