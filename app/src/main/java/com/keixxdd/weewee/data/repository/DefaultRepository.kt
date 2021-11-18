@@ -2,7 +2,9 @@ package com.keixxdd.weewee.data.repository
 
 import com.keixxdd.weewee.data.remote.NetworkService
 import com.keixxdd.weewee.domain.module.LoginData
+import com.keixxdd.weewee.domain.module.LoginResponseBody
 import com.keixxdd.weewee.domain.module.RegisterData
+import com.keixxdd.weewee.domain.module.RegisterResponseBody
 import com.keixxdd.weewee.utils.Resource
 import javax.inject.Inject
 import kotlin.math.log
@@ -15,7 +17,7 @@ class DefaultRepository @Inject constructor(
         firstname: String,
         lastname: String,
         password: String
-    ): Resource<RegisterData?> {
+    ): Resource<RegisterResponseBody?> {
         return try{
             val data = RegisterData(
                 email = email,
@@ -38,7 +40,7 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun checkLogin(
         email: String, password: String
-    ): Resource<LoginData?> {
+    ): Resource<LoginResponseBody?> {
         return try{
             val data = LoginData(
                 email = email,

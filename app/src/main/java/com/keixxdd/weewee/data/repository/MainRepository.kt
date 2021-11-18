@@ -2,7 +2,9 @@ package com.keixxdd.weewee.data.repository
 
 import android.content.res.Resources
 import com.keixxdd.weewee.domain.module.LoginData
+import com.keixxdd.weewee.domain.module.LoginResponseBody
 import com.keixxdd.weewee.domain.module.RegisterData
+import com.keixxdd.weewee.domain.module.RegisterResponseBody
 import com.keixxdd.weewee.utils.Resource
 
 interface MainRepository {
@@ -12,12 +14,12 @@ interface MainRepository {
         firstname: String,
         lastname: String,
         password: String
-    ): Resource<RegisterData?>
+    ): Resource<RegisterResponseBody?>
 
     suspend fun checkLogin(
         email: String,
         password: String
-    ): Resource<LoginData?>
+    ): Resource<LoginResponseBody?>
 
     /*suspend fun uploadAvatar(): Resource<AvatarData>
 

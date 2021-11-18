@@ -2,6 +2,7 @@ package com.keixxdd.weewee.domain.usecases
 
 import com.keixxdd.weewee.data.repository.DefaultRepository
 import com.keixxdd.weewee.domain.module.RegisterData
+import com.keixxdd.weewee.domain.module.RegisterResponseBody
 import com.keixxdd.weewee.utils.Resource
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ class RegisterUserUseCase @Inject constructor(
         firstname: String,
         lastname: String,
         password: String
-    ): Resource<RegisterData?>{
+    ): Resource<RegisterResponseBody?>{
         return repository.registerUser(
             email = email,
             firstname = firstname,

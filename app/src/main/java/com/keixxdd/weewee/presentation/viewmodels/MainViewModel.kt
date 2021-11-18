@@ -49,7 +49,7 @@ class MainViewModel @Inject constructor(
                         _response.value = GetResponseEvent.Success(registerCallback.data)
                 }
                 is Resource.Failure -> {
-                    _response.value = GetResponseEvent.Error(registerCallback.message?.message)
+                    _response.value = GetResponseEvent.Error(registerCallback.message?.cause.toString())
                 }
             }
         }
@@ -72,7 +72,7 @@ class MainViewModel @Inject constructor(
                         _response.value = GetResponseEvent.Success(loginCallback.data)
                 }
                 is Resource.Failure -> {
-                    _response.value = GetResponseEvent.Error(loginCallback.message?.message)
+                    _response.value = GetResponseEvent.Error(loginCallback.message?.toString())
                 }
             }
         }
